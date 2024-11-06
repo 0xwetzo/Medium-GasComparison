@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.24;
 
-import "forge-std/Test.sol";
+import "../../lib/forge-std/src/Test.sol";
 
-import { Gas1 } from "../src/Gas1.sol";
-import { Gas2 } from "../src/Gas2.sol";
+import { Gas1 } from "./Gas1.sol";
+import { Gas2 } from "./Gas2.sol";
 
-contract GasTest is Test {
+contract GasTest_1_2 is Test {
     Gas1 public gasContract1;
     Gas2 public gasContract2;
 

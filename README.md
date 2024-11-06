@@ -1,7 +1,10 @@
-## Medium story
+## Gas Optimisation repository
 
-https://wetzo.medium.com/gas-comparison-done-right-bc5bc9237d8f
+This repository contains different gas optimisation examples.
 
-### Usage
+### 1. Gas comparison done right
 
-Edit Gas1 and Gas2 with the functions you want to compare and run `forge test --gas-report`
+Medium story https://wetzo.medium.com/gas-comparison-done-right-bc5bc9237d8f
+
+-   Implementation 1 : `forge test --gas-report --match-contract GasTest_1_1`
+-   Implementation 2 : `forge test --gas-report --match-contract GasTest_1_2`
