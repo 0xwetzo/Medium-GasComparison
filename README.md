@@ -2,6 +2,8 @@
 
 This repository contains different gas optimisation examples.
 
+Important note: the contracts in this repository should not be used in a production environment. They are meant to be used for educational purpose only and using them on a mainnet can lead to fund losses.
+
 ### 1. Gas comparison done right
 
 Medium story https://wetzo.medium.com/gas-comparison-done-right-bc5bc9237d8f

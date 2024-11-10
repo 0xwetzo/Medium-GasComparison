@@ -1,14 +1,18 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import {MockERC20} from "../lib/forge-std/src/mocks/MockERC20.sol";
 
-contract MockERC20 is ERC20 {
-    // Initializing the ERC20 token with a name and symbol
-    constructor() ERC20("MockToken", "MCK") {}
+contract Token_ERC20 is MockERC20 {
+    constructor(string memory name, string memory symbol, uint8 decimals) {
+        initialize(name, symbol, decimals);
+    }
 
-    // Function to mint tokens to a specified address
-    function mint(address to, uint256 amount) external {
-        _mint(to, amount);
+    function mint(address to, uint256 value) public virtual {
+        _mint(to, value);
+    }
+
+    function burn(address from, uint256 value) public virtual {
+        _burn(from, value);
     }
 }

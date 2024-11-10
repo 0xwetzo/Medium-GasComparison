@@ -2,13 +2,15 @@
 pragma solidity ^0.8.24;
 
 import "../../lib/forge-std/src/Test.sol";
+import {Token_ERC20} from "../../mocks/MockERC20.sol";
 
-import { MockERC20 } from "../../mocks/MockERC20.sol";
+import { IERC20 } from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+
 import { Vault1 } from "./Vault1.sol";
 import { Vault2 } from "./Vault2.sol";
 
 contract GasTest_2_2 is Test {
-    MockERC20 public mockERC20;
+    Token_ERC20 public token;
     Vault1 public vault1;
     Vault2 public vault2;
 
@@ -16,36 +18,36 @@ contract GasTest_2_2 is Test {
     uint256 balance = 1 ether;
 
     function setUp() public {
-        mockERC20 = new MockERC20();
+        token = new Token_ERC20("Token", "TKN", 18);
         vault1 = new Vault1();
         vault2 = new Vault2();
 
-        mockERC20.mint(alice, balance);
-        mockERC20.mint(address(vault1), balance);
-        mockERC20.mint(address(vault2), balance);
+        token.mint(alice, balance);
+        token.mint(address(vault1), balance);
+        token.mint(address(vault2), balance);
         vm.startPrank(alice);
-        mockERC20.approve(address(vault1), balance);
-        mockERC20.approve(address(vault2), balance);
+        token.approve(address(vault1), balance);
+        token.approve(address(vault2), balance);
         vm.stopPrank();
     }
 
     function testVault1() public {
         vm.prank(alice);
-        vault1.withdrawAll(mockERC20);
-        assertEq(mockERC20.balanceOf(address(vault1)), 0);
+        vault1.withdrawAll(IERC20(address(token)));
+        assertEq(token.balanceOf(address(vault1)), 0);
         
         vm.prank(alice);
-        vault1.deposit(mockERC20, balance);
-        assertEq(mockERC20.balanceOf(address(vault1)), balance);
+        vault1.deposit(IERC20(address(token)), balance);
+        assertEq(token.balanceOf(address(vault1)), balance);
     }
 
     function testVault2() public {
         vm.prank(alice);
-        vault2.withdrawAlmostAll(mockERC20);
-        assertEq(mockERC20.balanceOf(address(vault2)), 1);
+        vault2.withdrawAlmostAll(IERC20(address(token)));
+        assertEq(token.balanceOf(address(vault2)), 1);
 
         vm.prank(alice);
-        vault2.deposit(mockERC20, balance - 1);
-        assertEq(mockERC20.balanceOf(address(vault2)), balance);
+        vault2.deposit(IERC20(address(token)), balance - 1);
+        assertEq(token.balanceOf(address(vault2)), balance);
     }
 }
